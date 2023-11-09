@@ -58,8 +58,8 @@ class Field {
     }
     
     testWin(/* posX, posY */) {
-        const position = this.field[this.posY][this.posX];
-        if (position === '^'){
+        //const position = ;
+        if (this.field[this.posY][this.posX] === '^'){
             return true; // Return true instead of 1
         }
     }
@@ -97,7 +97,7 @@ class Field {
     }
     //working here
     updateField() {
-        this.field[this.posY], [this.posX] = '*';
+        this.field[this.posY][this.posX] = '*';
     }
     // and here, posX and posY needs to move into the xcope of the entire class. as GPT tomorrow
     play() {
@@ -105,14 +105,14 @@ class Field {
         console.log('posY: ' + this.posY)
         let move = prompt('move ');
         this.handleInput(move);
+        this.hasLost = this.testLose(this.posX, this.posY)
+        if (this.hasLost === true) {
+            return console.log('Sorry, you seem to have fallen off the platform')
+        }
         this.hasWon = this.testWin(/* this.posX, this.posY */)
         //console.log('will this print?')
         if (this.hasWon === true) {
             return console.log("Congrat's, you found your hat")
-        }
-        this.hasLost = this.testLose(this.posX, this.posY)
-        if (this.hasLost === true) {
-            return console.log('Sorry, you seem to have fallen off the platform')
         }
         console.log('poY: ' + this.posY)
         //update and print new field
