@@ -17,7 +17,7 @@ class Field {
 
     print() {
         this.field.forEach(subArray => {
-            console.log(subArray.toString())
+            console.log(subArray.join(' '))
         });
     }
 
