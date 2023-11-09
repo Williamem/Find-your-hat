@@ -21,27 +21,6 @@ class Field {
         });
     }
 
-/*     testLose(posX, posY) {
-        //fall of y-axis
-        if (posY < 0 || posY > this.field[0].length) {
-            return true;
-        }
-        //fall off x-axis
-        if (posX < 0 || posX > this.field.length) {
-            return true;
-        }
-        //fall into hole
-        if (this.field[posY][posX] === 'O') {
-            return true;
-        }
-    }
-
-    testWin(posX, posY) {
-        const position = this.field[posY][posX];
-        if (position === '^'){
-            return true;
-        }
-    } */
     testLose(posX, posY) {
         // fall off y-axis
         if (posY < 0 || posY > this.field[0].length) {
@@ -57,23 +36,12 @@ class Field {
         }
     }
     
-    testWin(/* posX, posY */) {
+    testWin(posX, posY) {
         //const position = ;
-        if (this.field[this.posY][this.posX] === '^'){
+        if (this.field[posY][posX] === '^'){
             return true; // Return true instead of 1
         }
     }
-    
-
-/*     testWinLose() {
-        if (this.testLose(this.posY, this.posX) === 0) {
-            return console.log('You lost');
-        }
-        if (this.testWin(this.posY, this.posX) === 0) {
-            return console.log('Wow, great. You found the hat');
-        }
-        return console.log('Use wasd to move around');
-    } */
 
     handleInput(userInput) {
         //handle user input
@@ -92,29 +60,28 @@ class Field {
                 break;
             default:
                 return console.log('You have to use wasd to move')
-        }
-        /* this.testWinLose(posY, posX)   */      
+        }     
     }
-    //working here
+
     updateField() {
         this.field[this.posY][this.posX] = '*';
     }
-    // and here, posX and posY needs to move into the xcope of the entire class. as GPT tomorrow
+
     play() {
         this.print()
         console.log('posY: ' + this.posY)
         let move = prompt('move ');
         this.handleInput(move);
+        //test if player has lost
         this.hasLost = this.testLose(this.posX, this.posY)
         if (this.hasLost === true) {
             return console.log('Sorry, you seem to have fallen off the platform')
         }
-        this.hasWon = this.testWin(/* this.posX, this.posY */)
-        //console.log('will this print?')
+        //test if player has won
+        this.hasWon = this.testWin(this.posX, this.posY)
         if (this.hasWon === true) {
             return console.log("Congrat's, you found your hat")
         }
-        console.log('poY: ' + this.posY)
         //update and print new field
         this.updateField();
         this.play()
@@ -126,9 +93,5 @@ const myField = new Field([
     ['░', 'O', '░'],
     ['░', '^', '░'],
   ]);
-  
-/*   myField.print()
-  myField.testLose()
-  //myField.testWin() */
-  //myField.play('s');
+
 myField.play()
