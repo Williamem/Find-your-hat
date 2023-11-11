@@ -22,10 +22,6 @@ class Field {
         let fieldWidth = 10;
         let fieldDifficulty = 1;
         
-        //height 10-100, width 10-100, difficulty 0-5
-
-
-        
         if (height) {
             fieldHeight = parseInt(height);
         }
@@ -49,17 +45,15 @@ class Field {
             return console.log('Set the game up with numbers in the ranges given, please restart');
         }
 
-        //claculate number of chars to fill field
         //calculate number of holes needed in field
         const numHoles = Math.round(fieldHeight * fieldWidth * (fieldDifficulty * 0.1));
+        //claculate number of chars to fill field
         const numFieldCharacters = fieldHeight * fieldWidth - numHoles - 2;
-        console.log(`numFieldChar: ${numFieldCharacters}, numHoles: ${numHoles}`)
 
         //generate all the field characters needed and push to fieldFill array
         for (let i = 0; i < numFieldCharacters; i++) {
             fieldFill.push(fieldCharacter);
         }
-        console.log(`fieldFill: ${fieldFill}, \n fieldFill.length: ${fieldFill.length}`)
         
         //generate the holes and push to fieldFill array
         for (let i = 0; i < numHoles; i++) {
@@ -67,26 +61,15 @@ class Field {
         }
         //put the hat in the fieldFill array
         fieldFill.push(hat);
-        //console.log(`fieldFill: ${fieldFill}, \n fieldFill.length: ${fieldFill.length}`)
 
         //generate the first horizontal line of field
         newField.push([]);
         for (let i = 1; i < fieldWidth; i++) {
             let randomIndex = Math.floor(Math.random() * fieldFill.length);
-            //console.log('random index: ' + randomIndex);
             newField[0].push(fieldFill.splice(randomIndex, 1)[0]);
         }
 
-        //generate the rest of the field
-/*         for (let i = 1; i < fieldHeight; i++) {
-            newField.push([]);
-            for (let j = 0; j < fieldWidth; j++) {
-            let randomIndex = Math.floor(Math.random() * fieldFill.length);
-            newField[i].push(fieldFill.splice(randomIndex, 1)[0]);
-            }
-        } */
         for (let i = 1; i < fieldHeight; i++) {
-            //newField.push([]);
             newField[i] = [];
             for (let j = 0; j < fieldWidth; j++) {
               let randomIndex = Math.floor(Math.random() * fieldFill.length);
@@ -97,20 +80,8 @@ class Field {
 
         //put the player in the top left corner of the field
         newField[0].unshift(pathCharacter);
-        console.log(`newField: \n ${newField.join(' ')}`);
         return newField;
-
-
-        //console.log(`height: ${fieldHeight}, width: ${fieldWidth}, difficulty: ${fieldDifficulty}`)
     }
-
-/*     static initiateGame() {
-        let setUp = prompt('Set up the game by giving a height and a width from 10 to 100 and a difficulty from 1-5. Separarate with comma, like this: 20, 20, 3: ');
-        this.field = Field.generateField(setUp)
-        if (this.field === false) {
-            return this.initiateGame();
-        }
-    } */
 
     print() {
         this.field.forEach(subArray => {
@@ -121,22 +92,21 @@ class Field {
     testLose(posX, posY) {
         // fall off y-axis
         if (posY < 0 || posY > this.field[0].length) {
-            return true; // Return true instead of 1
+            return true;
         }
         // fall off x-axis
         if (posX < 0 || posX > this.field.length) {
-            return true; // Return true instead of 1
+            return true;
         }
         // fall into a hole
         if (this.field[posY][posX] === 'O') {
-            return true; // Return true instead of 1
+            return true;
         }
     }
     
     testWin(posX, posY) {
-        //const position = ;
         if (this.field[posY][posX] === '^'){
-            return true; // Return true instead of 1
+            return true;
         }
     }
 
@@ -166,7 +136,6 @@ class Field {
 
     play() {
         this.print()
-        console.log('posY: ' + this.posY)
         let move = prompt('move ');
         this.handleInput(move);
         //test if player has lost
@@ -185,12 +154,6 @@ class Field {
     }
 }
 
-/* const myField = new Field([
-    ['*', '░', 'O'],
-    ['░', 'O', '░'],
-    ['░', '^', '░'],
-  ]); */
-
 
 let setUp = prompt('Set up the game by giving a height and a width from 10 to 100 and a difficulty from 1-5. Separarate with comma, like this: 20, 20, 3: ');
 const myField = new Field(Field.generateField(setUp))
@@ -199,7 +162,8 @@ myField.play();
 let playAgain = prompt('want to play again with the same settings? type y for yes and n for no. If you want to change the settings type c');
 
 if (playAgain === 'y') {
-    myField.play();
+    const newField = new Field(Field.generateField(setUp))
+    newField.play();
 }
 if (playAgain === 'c') {
     
